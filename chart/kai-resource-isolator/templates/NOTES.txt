@@ -6,11 +6,12 @@ Kai resource isolator is installed in namespace {{ include "kai-resource-isolato
      --namespace kai-resource-isolator --create-namespace \
      --version {{ .Chart.Version }}
 
-2) Ensure GPU nodes receive libvgpu:
+2) Check the webhook is serving:
 
-   kubectl -n {{ include "kai-resource-isolator.namespace" . }} get daemonset {{ include "kai-resource-isolator.librarySync.fullname" . }}
+   kubectl -n {{ include "kai-resource-isolator.namespace" . }} get deployment {{ include "kai-resource-isolator.webhook.fullname" . }}
 
-3) Webhook injects {{ .Values.paths.containerVgpuMount }} (hostPath) and /etc/ld.so.preload for pods that request:
+3) Webhook injects an emptyDir at {{ .Values.paths.containerVgpuMount }}, a vgpu-install
+   initContainer that stages libvgpu.so into it, and /etc/ld.so.preload, for pods that request:
    {{ .Values.webhook.gpuShareResources }}
 
    Opt-out a pod: annotation kai-resource-isolator.io/inject: "false"

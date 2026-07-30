@@ -43,8 +43,8 @@ spec:
           env:
             - name: CONTAINER_VGPU_MOUNT
               value: {{ .Values.paths.containerVgpuMount | quote }}
-            - name: HOST_VGPU_DIR
-              value: {{ .Values.paths.containerVgpuMount | quote }}
+            - name: ISOLATOR_IMAGE
+              value: {{ include "kai-resource-isolator.image" . | quote }}
             - name: GPU_SHARE_RESOURCES
               value: {{ .Values.webhook.gpuShareResources | quote }}
           ports:

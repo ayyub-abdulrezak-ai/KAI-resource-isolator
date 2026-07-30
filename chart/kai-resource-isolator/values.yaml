@@ -1,4 +1,3 @@
-## Default values mirror HAMi device-plugin hook layout (HOOK_PATH=/usr/local → /usr/local/vgpu on host).
 nameOverride: ""
 fullnameOverride: ""
 namespaceOverride: ""
@@ -14,21 +13,7 @@ image:
   pullPolicy: IfNotPresent
 
 paths:
-  ## Host directory base; the chart installs libraries under {hostInstallBase}/vgpu/
-  hostInstallBase: /usr/local
-  ## Path inside the container and on the host (same absolute path is required for ld.so.preload and device-plugin compatibility)
   containerVgpuMount: /usr/local/vgpu
-
-librarySync:
-  ## Node labels for GPU nodes (empty = all nodes)
-  nodeSelector: {}
-  tolerations:
-    - operator: Exists
-      effect: NoSchedule
-  resources: {}
-  priorityClassName: system-node-critical
-  podLabels: {}
-  podAnnotations: {}
 
 webhook:
   replicaCount: 1
